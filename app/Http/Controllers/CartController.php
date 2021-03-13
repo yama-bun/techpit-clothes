@@ -45,7 +45,7 @@ class CartController extends Controller
             array_push($line_items, $line_item);
         }
 
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        \Stripe\Stripe::setApiKey(config('app.stripe_secret_key'));
         // dd(env('STRIPE_SECRET_KEY'));
 
         $session = \Stripe\Checkout\Session::create([
@@ -57,7 +57,7 @@ class CartController extends Controller
 
         return view('cart.checkout', [
             'session' => $session,
-            'publicKey' => env('STRIPE_PUBLIC_KEY')
+            'publicKey' => config('app.stripe_public_key'),
         ]);
     }
 
@@ -68,4 +68,6 @@ class CartController extends Controller
 
         return redirect(route('product.index'));
     }
+
+
 }
